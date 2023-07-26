@@ -1,5 +1,6 @@
 from django.db import models
 
+from users.models import User
 from .managers import CustomUserManager
 
 
@@ -8,7 +9,7 @@ class Employee(CustomUserManager):
         MAN = 'man'
         WOMEN = 'women'
 
-    username = models.CharField(max_length=32, unique=True)
+    username = models.ForeignKey(User, on_delete=models.CASCADE, related_name="employee")
     region = models.CharField(max_length=256, null=True)
     birth_date = models.DateField(null=True)
     gender = models.CharField(max_length=50, choices=Gender.choices, default=Gender.MAN)
