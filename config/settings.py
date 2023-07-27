@@ -46,8 +46,10 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # My App
-    'users',
-    'vacancy',
+
+    'users.apps.UsersConfig',
+    'company.apps.CompanyConfig',
+    'vacancy.apps.VacancyConfig',
 ]
 
 MIDDLEWARE = [

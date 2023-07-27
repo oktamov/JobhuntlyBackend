@@ -16,4 +16,4 @@ class User(AbstractUser):
     def __str__(self):
         if self.first_name:
             return self.get_full_name()
-        return str(self.pk)
+        return self.email
