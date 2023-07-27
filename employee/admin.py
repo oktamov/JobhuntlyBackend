@@ -7,4 +7,4 @@ from .models import Employee
 class UserAdmin(admin.ModelAdmin):
     list_display = ['username', 'region', 'birth_date', 'gender']
     ordering = ['-date_joined']
- 
+    
