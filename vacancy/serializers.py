@@ -15,11 +15,11 @@ class VacancySerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = self.context['request'].user
-        if user.companies is None:
+        if not user.companies.exists():  # Check if user has companies
             raise serializers.ValidationError('User must belong to a company to create a vacancy.')
 
         company = validated_data.get('company')
-        if company != user.companies:
+        if not user.companies.filter(id=company.id).exists():  # Check if company is in user's companies
             raise serializers.ValidationError('You can only create vacancies for your own company.')
 
         validated_data['user'] = user
