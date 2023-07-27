@@ -50,3 +50,4 @@ class ApplicationListView(generics.ListAPIView):
     queryset = Application.objects.all()
     serializer_class = ApplicationListSerializer
     lookup_field = 'pk'
+
