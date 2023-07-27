@@ -28,23 +28,10 @@ class VacancySerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
-class Application1Serializer(serializers.ModelSerializer):
+class ApplicationListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Application
-        fields = ('id', 'created_at')
-
-    def create(self, validated_data):
-        user = self.context['request'].user
-        vacancy = self.context['request'].vacancy
-        if not user.employees.exists():
-            raise serializers.ValidationError('First create an employee')
-        employee = user.employees
-        if not user.employees.filter(id=employee.id).exists():
-            raise serializers.ValidationError('You can only submit a vacancy for your own employee')
-
-        validated_data['employees'] = employee
-        validated_data['vacancy'] = vacancy
-        return super().create(validated_data)
+        fields = ('id', 'employee', 'vacancy', 'created_at')
 
 
 class ApplicationSerializer(serializers.ModelSerializer):
