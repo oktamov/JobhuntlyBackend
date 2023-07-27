@@ -19,7 +19,7 @@ class Sector(models.Model):
 
 
 class Company(models.Model):
-    user = models.ForeignKey('users.User', models.CASCADE, 'companies')
+    user = models.ForeignKey(to='users.User', on_delete=models.CASCADE, related_name='companies')
     name = models.CharField(max_length=128)
     region = models.CharField(max_length=64)
     location = models.CharField(max_length=256)
@@ -28,8 +28,8 @@ class Company(models.Model):
     revenue = models.CharField(max_length=32)
     founded = models.DateField()
     logo = models.ImageField(upload_to='companies/logo/')
-    sector = models.ForeignKey(Sector, models.CASCADE, 'companies')
-    benefits = models.ManyToManyField(Benefit, models.CASCADE)
+    sector = models.ForeignKey(to=Sector, on_delete=models.CASCADE, related_name='companies')
+    benefits = models.ManyToManyField(to=Benefit, related_name='companies')
 
     def __str__(self):
         return self.name

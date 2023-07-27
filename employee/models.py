@@ -1,7 +1,7 @@
 from django.db import models
 
 from users.models import User
-from .managers import CustomUserManager
+from .managers import CustomUserManager # noqa
 
 
 class Employee(CustomUserManager):

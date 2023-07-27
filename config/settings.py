@@ -47,7 +47,8 @@ INSTALLED_APPS = [
 
     # My App
     'users.apps.UsersConfig',
-    'vacancy',
+    'company.apps.CompanyConfig',
+    'vacancy.apps.VacancyConfig',
 ]
 
 MIDDLEWARE = [
