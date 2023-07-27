@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_filters',
 
     # My App
 
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'company.apps.CompanyConfig',
     'vacancy.apps.VacancyConfig',
     'employee.apps.EmployeeConfig'
+    'employee.apps.EmployeeConfig',
 ]
 
 MIDDLEWARE = [

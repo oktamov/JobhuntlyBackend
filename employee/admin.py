@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Employee
+from .models import Employee, Education, University
 
-@admin.register(Employee)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ['user', 'region', 'birth_date', 'gender']
-    # ordering = ['-created_at']
+admin.site.register(Employee)
+
+admin.site.register(Education)
+admin.site.register(University)

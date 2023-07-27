@@ -2,12 +2,14 @@ from django.contrib.auth import get_user_model
 from django.db import models
 
 from company.models import Company
+from employee.models import Employee
 
 User = get_user_model()
 
 
 class Vacancy(models.Model):
     LEVEL_CHOICES = (
+        ('Internship', 'Internship'),
         ('Junior', 'Junior'),
         ('Middle', 'Middle'),
         ('Senior', 'Senior'),
@@ -30,3 +32,19 @@ class Vacancy(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def num_applications(self):
+        return self.applications.count()
+
+
+class Application(models.Model):
+    employee = models.ForeignKey(Employee, related_name="applications", on_delete=models.CASCADE)
+    vacancy = models.ForeignKey(Vacancy, related_name="applications", on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('employee', 'vacancy')
+
+    def __str__(self):
+        return f'{self.employee} {self.vacancy.title}'
