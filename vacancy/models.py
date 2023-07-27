@@ -26,7 +26,7 @@ class Vacancy(models.Model):
     overview = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     offer = models.TextField(blank=True, null=True)
-    company = models.ForeignKey(Company, related_name="vacancies", on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name="vacancies", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
