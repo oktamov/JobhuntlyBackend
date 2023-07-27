@@ -18,9 +18,13 @@ class Vacancy(models.Model):
     experience = models.CharField(max_length=255)
     level = models.CharField(max_length=10, choices=LEVEL_CHOICES, default='Junior')
     job_type = models.CharField(max_length=10, choices=JOB_TYPE_CHOICES, default='part time')
-    selery = models.IntegerField(default=0)
+    salary = models.IntegerField(default=0)
     overview = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     offer = models.TextField(blank=True, null=True)
     # company = models.ForeignKey("Company", related_name="vacancies", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name="vacancies", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
