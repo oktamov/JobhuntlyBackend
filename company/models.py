@@ -18,7 +18,7 @@ class Sector(models.Model):
 
 
 class Company(models.Model):
-    user = models.ForeignKey(to='users.User', on_delete=models.CASCADE, related_name='companies')
+    user = models.ForeignKey(to='users.User', on_delete=models.CASCADE, related_name='companies', null=True)
     name = models.CharField(max_length=128)
     region = models.CharField(max_length=64)
     location = models.CharField(max_length=256)
