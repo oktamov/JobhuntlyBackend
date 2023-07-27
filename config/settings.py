@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # My App
+
     'users.apps.UsersConfig',
     'company.apps.CompanyConfig',
     'vacancy.apps.VacancyConfig',
