@@ -2,4 +2,9 @@ from django.contrib import admin
 
 from vacancy.models import Vacancy
 
-admin.site.register(Vacancy)
+# admin.site.register(Vacancy)
+
+
+@admin.register(Vacancy)
+class ModelNameAdmin(admin.ModelAdmin):
+    list_display = ['title', 'experience']

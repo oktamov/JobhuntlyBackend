@@ -11,4 +11,4 @@ class VacancySerializer(serializers.ModelSerializer):
         model = Vacancy
         fields = (
             'id', 'title', 'experience', 'level', 'job_type', 'salary', 'overview', 'description', 'offer',
-            'created_at', 'user')
+            'created_at', 'company', 'user')
