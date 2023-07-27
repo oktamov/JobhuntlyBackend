@@ -32,12 +32,11 @@ class Employee(CustomUserManager):
 
 
 class Education(CustomUserManager):
-    employee_id = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='education')
-    university_id = models.ForeignKey('University', on_delete=models.CASCADE, related_name='university')
     student_to = models.DateField()
     student_from = models.DateField()
     gpa = models.IntegerField(default=0)
-
+    employee_id = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='education')
+    university_id = models.ForeignKey('University', on_delete=models.CASCADE, related_name='university')
 
 class University(models.Model):
     name = models.CharField(max_length=200)
