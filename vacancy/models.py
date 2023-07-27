@@ -8,6 +8,7 @@ User = get_user_model()
 
 class Vacancy(models.Model):
     LEVEL_CHOICES = (
+        ('Internship', 'Internship'),
         ('Junior', 'Junior'),
         ('Middle', 'Middle'),
         ('Senior', 'Senior'),
