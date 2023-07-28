@@ -6,7 +6,6 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from .permissions import IsOwnerOrReadOnly
 from paginations import CustomPageNumberPagination
 from employee.serializers import (
-    EmployeeExperienceSkillSerializer,
     ExperienceSerializer,
     SkillSerializer,
     EmployeeSkillSerializer,
@@ -14,7 +13,10 @@ from employee.serializers import (
     EmployeeDetailSerializer,
     EducationSerializer,
     EducationDetailSerializer,
-    EducationListCreateSerializer
+    EducationListCreateSerializer,
+    UniversitySerializers,
+    UniversityCreateSerializers,
+    UniversityDetailSerializers
 )
 
 from .models import Employee, Experience, Skill, EmployeeSkill, Education
@@ -69,10 +71,10 @@ class ExperienceListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
-class EmployeeExperienceSkillListCreateView(generics.ListCreateAPIView):
-    queryset = Employee.objects.all()
-    serializer_class = EmployeeExperienceSkillSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+# class EmployeeExperienceSkillListCreateView(generics.ListCreateAPIView):
+#     queryset = Employee.objects.all()
+#     serializer_class = EmployeeExperienceSkillSerializer
+#     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class SkillDetailView(generics.RetrieveUpdateDestroyAPIView):
