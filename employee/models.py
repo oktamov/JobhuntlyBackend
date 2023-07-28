@@ -6,13 +6,13 @@ from users.models import User
 
 class Employee(models.Model):
     class Gender(models.TextChoices):
-        MAN = 'man'
-        WOMEN = 'women'
+        MALE = 'male'
+        FEMALE = 'female'
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="employee")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="employees")
     region = models.CharField(max_length=256, null=True)
     birth_date = models.DateField(null=True)
-    gender = models.CharField(max_length=50, choices=Gender.choices, default=Gender.MAN)
+    gender = models.CharField(max_length=50, choices=Gender.choices, default=Gender.MALE)
 
     def __str__(self):
         return self.user.get_full_name()
