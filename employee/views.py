@@ -12,9 +12,12 @@ from employee.serializers import (
     EmployeeSkillSerializer,
     EmployeeListCreateSerializer,
     EmployeeDetailSerializer,
+    EducationSerializer,
+    EducationDetailSerializer,
+    EducationListCreateSerializer
 )
 
-from .models import Employee, Experience, Skill, EmployeeSkill
+from .models import Employee, Experience, Skill, EmployeeSkill, Education
 
 
 class EmployeeListView(ListCreateAPIView):
@@ -89,3 +92,32 @@ class ExperienceDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ExperienceSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+
+class EducationDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Education.objects.all()
+    serializer_class = EducationDetailSerializer
+    permission_classes = [IsOwnerOrReadOnly]
+
+
+class EducationListCreateView(generics.ListCreateAPIView):
+    queryset = Education.objects.order_by("-id")
+    filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
+    search_fields = ("student_to", "student_from", "gpa")
+    pagination_class = CustomPageNumberPagination
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    serializer_class = EducationSerializer
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return EducationDetailSerializer
+        return EducationDetailSerializer
+
+
+class EducationListView(ListCreateAPIView):
+    queryset = Education.objects.all()
+    pagination_class = CustomPageNumberPagination
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return EducationListCreateSerializer
+        return EducationListCreateSerializer
