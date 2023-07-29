@@ -15,7 +15,7 @@ class Employee(models.Model):
     gender = models.CharField(max_length=50, choices=Gender.choices, default=Gender.MAN)
 
     def __str__(self):
-        return self.user.get_full_name()
+        return self.user.email
 
 
 class Experience(models.Model):

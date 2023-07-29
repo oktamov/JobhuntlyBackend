@@ -1,19 +1,16 @@
 from rest_framework import serializers
 
-from employee.models import Employee
+from employee.models import Employee, Skill
 from users.serializers import UserSerializer
 from vacancy.models import Vacancy, Application
 
 
 class VacancySerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
-
     class Meta:
         model = Vacancy
         fields = (
             'id', 'title', 'experience', 'level', 'job_type', 'salary', 'overview', 'description', 'offer',
-            'num_applications',
-            'created_at', 'company', 'user')
+            'created_at', 'user', 'company', 'skills')
 
     def create(self, validated_data):
         user = self.context['request'].user
@@ -28,6 +25,24 @@ class VacancySerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
+class SkillForVacancySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Skill
+        fields = ('name',)
+
+
+class VacancyListSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    skills = SkillForVacancySerializer(many=True)
+
+    class Meta:
+        model = Vacancy
+        fields = (
+            'id', 'title', 'experience', 'level', 'job_type', 'salary', 'overview', 'description', 'offer',
+            'num_applications',
+            'created_at', 'company', 'user', 'skills')
+
+
 class ApplicationListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Application
@@ -38,16 +53,3 @@ class ApplicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Application
         fields = ('id', 'created_at')
-
-    def create(self, validated_data):
-        user = self.context['request'].user
-        employee = Employee.objects.filter(user=user).first()
-        if not employee:
-            raise serializers.ValidationError('The user must have an associated employee to create an application.')
-
-        vacancy = self.context['view'].kwargs.get('vacancy_id')
-        if Application.objects.filter(employee=employee, vacancy=vacancy).exists():
-            raise serializers.ValidationError('This employee has already applied for this vacancy.')
-
-        validated_data['employee'] = employee
-        return super().create(validated_data)
