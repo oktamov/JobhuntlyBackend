@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 
 from company.models import Company
-from employee.models import Employee
+from employee.models import Employee, Skill
 
 User = get_user_model()
 
@@ -29,6 +29,7 @@ class Vacancy(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name="vacancies", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    skills = models.ManyToManyField(Skill, related_name="vacancies")
 
     def __str__(self):
         return self.title
