@@ -57,8 +57,8 @@ class Company(models.Model):
     size = models.CharField(max_length=32)
     revenue = models.CharField(max_length=32)
     founded = models.DateField()
-    logo = models.ImageField(upload_to='companies/logo/')
-    sector = models.ForeignKey(to=Sector, on_delete=models.CASCADE, related_name='companies')
+    logo = models.ImageField(upload_to='companies/logo/', null=True)
+    sector = models.ForeignKey(to=Sector, on_delete=models.CASCADE, related_name='companies', null=True)
     benefits = models.ManyToManyField(to=Benefit, related_name='companies')
     tech_stacks = models.ManyToManyField(to=TechStack, related_name='companies')
 
