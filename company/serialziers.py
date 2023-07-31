@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from company.models import Company, Benefit, Sector, TechStack, Contact, WorkingAtCompany
 
 
@@ -45,12 +46,13 @@ class CompanyBenefitsSerializer(serializers.ModelSerializer):
 
 
 class CompanyDetailSerializer(serializers.ModelSerializer):
-    benefits = CompanyBenefitsSerializer(many=True, read_only=True)
+    benefits = CompanyBenefitsSerializer(many=True)
     sector = CompanySectorSerializer()
-    tech_stack = CompanyTechStackSerializer
-    contact = CompanyContactSerializer
-    working_company = WorkingAtCompanySerializer
+    tech_stack = CompanyTechStackSerializer(many=True)
+    contact = CompanyContactSerializer(many=True)
+    working_company = WorkingAtCompanySerializer(many=True)
 
     class Meta:
         model = Company
-        fields = ('name', 'description', 'logo', 'founded')
+        fields = (
+            'name', 'description', 'logo', 'founded', 'benefits', 'sector', 'tech_stack', 'contact', 'working_company')
