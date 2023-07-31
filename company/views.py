@@ -1,19 +1,29 @@
 from rest_framework import generics
-from company.serialziers import CompanyDetailSerializer, CompanyCreateSerializer, WorkingAtCompanySerializer, \
-    CompanyContactSerializer, CompanySectorSerializer, CompanyTechStackSerializer, CompanyListSerializer
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from company.serialziers import CompanyDetailSerializer, WorkingAtCompanySerializer, \
+    CompanyContactSerializer, CompanySectorSerializer, CompanyTechStackSerializer, CompanyListCreateSerializer
 from company.models import Company, WorkingAtCompany, Contact, Sector, TechStack
+from paginations import CustomPageNumberPagination
 
 
 class CompanyListCreateView(generics.ListCreateAPIView):
     queryset = Company.objects.order_by('-id')
+    filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
+    # filterset_fields = ("region", "birth_date")
+    ordering_fields = ("name", "size")
+    search_fields = ("name", "location")
+    pagination_class = CustomPageNumberPagination
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
-            return CompanyListSerializer
-        return CompanyListSerializer
+            return CompanyListCreateSerializer
+        return CompanyListCreateSerializer
 
 
-class WorkingCompanyListView(generics.ListCreateAPIView):
+class WorkingCompanyListCreateView(generics.ListCreateAPIView):
     queryset = WorkingAtCompany.objects.order_by('-id')
 
     def get_serializer_class(self):
@@ -22,7 +32,7 @@ class WorkingCompanyListView(generics.ListCreateAPIView):
         return WorkingAtCompanySerializer
 
 
-class CompanyContactListView(generics.ListCreateAPIView):
+class CompanyContactListCreateView(generics.ListCreateAPIView):
     queryset = Contact.objects.order_by('-id')
 
     def get_serializer_class(self):
@@ -31,7 +41,7 @@ class CompanyContactListView(generics.ListCreateAPIView):
         return CompanyContactSerializer
 
 
-class CompanySectorListView(generics.ListCreateAPIView):
+class CompanySectorLisCreateView(generics.ListCreateAPIView):
     queryset = Sector.objects.order_by('-id')
 
     def get_serializer_class(self):
@@ -40,7 +50,7 @@ class CompanySectorListView(generics.ListCreateAPIView):
         return CompanySectorSerializer
 
 
-class CompanyTechStackListView(generics.ListCreateAPIView):
+class CompanyTechStackListCreateView(generics.ListCreateAPIView):
     queryset = TechStack.objects.order_by('-id')
 
     def get_serializer_class(self):

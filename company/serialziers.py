@@ -3,13 +3,7 @@ from rest_framework import serializers
 from company.models import Company, Benefit, Sector, TechStack, Contact, WorkingAtCompany
 
 
-class CompanyListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Company
-        fields = ('id', 'name', 'description', 'logo', 'sector')
-
-
-class CompanyCreateSerializer(serializers.ModelSerializer):
+class CompanyListCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
         fields = ('id', 'name', 'description', 'logo', 'sector')
