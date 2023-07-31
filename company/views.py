@@ -4,7 +4,7 @@ from company.serialziers import CompanyDetailSerializer, CompanyCreateSerializer
 from company.models import Company, WorkingAtCompany, Contact, Sector, TechStack
 
 
-class CompanyListView(generics.ListAPIView):
+class CompanyListCreateView(generics.ListCreateAPIView):
     queryset = Company.objects.order_by('-id')
 
     def get_serializer_class(self):
@@ -13,16 +13,7 @@ class CompanyListView(generics.ListAPIView):
         return CompanyListSerializer
 
 
-class CompanyCreateView(generics.CreateAPIView):
-    queryset = Company.objects.order_by('-id')
-
-    def get_serializer_class(self):
-        if self.request.method == 'POST':
-            return CompanyCreateSerializer
-        return CompanyCreateSerializer
-
-
-class WorkingCompanyListView(generics.ListAPIView):
+class WorkingCompanyListView(generics.ListCreateAPIView):
     queryset = WorkingAtCompany.objects.order_by('-id')
 
     def get_serializer_class(self):
@@ -31,7 +22,7 @@ class WorkingCompanyListView(generics.ListAPIView):
         return WorkingAtCompanySerializer
 
 
-class CompanyContactListView(generics.ListAPIView):
+class CompanyContactListView(generics.ListCreateAPIView):
     queryset = Contact.objects.order_by('-id')
 
     def get_serializer_class(self):
@@ -40,7 +31,7 @@ class CompanyContactListView(generics.ListAPIView):
         return CompanyContactSerializer
 
 
-class CompanySectorListView(generics.ListAPIView):
+class CompanySectorListView(generics.ListCreateAPIView):
     queryset = Sector.objects.order_by('-id')
 
     def get_serializer_class(self):
@@ -49,7 +40,7 @@ class CompanySectorListView(generics.ListAPIView):
         return CompanySectorSerializer
 
 
-class CompanyTechStackListView(generics.ListAPIView):
+class CompanyTechStackListView(generics.ListCreateAPIView):
     queryset = TechStack.objects.order_by('-id')
 
     def get_serializer_class(self):

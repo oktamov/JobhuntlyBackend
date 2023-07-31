@@ -24,7 +24,7 @@ class CompanySectorSerializer(serializers.ModelSerializer):
 class CompanyTechStackSerializer(serializers.ModelSerializer):
     class Meta:
         model = TechStack
-        fields = ('id','logo', 'name')
+        fields = ('id', 'logo', 'name')
 
 
 class CompanyContactSerializer(serializers.ModelSerializer):
