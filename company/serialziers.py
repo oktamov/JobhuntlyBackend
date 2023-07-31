@@ -6,43 +6,43 @@ from company.models import Company, Benefit, Sector, TechStack, Contact, Working
 class CompanyListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
-        fields = ('name', 'description', 'logo', 'sector')
+        fields = ('id', 'name', 'description', 'logo', 'sector')
 
 
 class CompanyCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
-        fields = ('name', 'description', 'logo', 'sector')
+        fields = ('id', 'name', 'description', 'logo', 'sector')
 
 
 class CompanySectorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sector
-        fields = ('name',)
+        fields = ('id', 'name')
 
 
 class CompanyTechStackSerializer(serializers.ModelSerializer):
     class Meta:
         model = TechStack
-        fields = ('logo', 'name')
+        fields = ('id','logo', 'name')
 
 
 class CompanyContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact
-        fields = ('company', 'url', 'contact')
+        fields = ('id', 'company', 'url', 'contact')
 
 
 class WorkingAtCompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkingAtCompany
-        fields = ('company', 'image')
+        fields = ('id', 'company', 'image')
 
 
 class CompanyBenefitsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Benefit
-        fields = ('name', 'description', 'logo')
+        fields = ('id', 'name', 'description', 'logo')
 
 
 class CompanyDetailSerializer(serializers.ModelSerializer):
@@ -55,4 +55,5 @@ class CompanyDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
         fields = (
-            'name', 'description', 'logo', 'founded', 'benefits', 'sector', 'tech_stack', 'contact', 'working_company')
+            'id', 'name', 'description', 'logo', 'founded', 'benefits', 'sector', 'tech_stack', 'contact',
+            'working_company')
