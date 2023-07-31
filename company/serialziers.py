@@ -1,5 +1,4 @@
 from rest_framework import serializers
-
 from company.models import Company, Benefit, Sector, TechStack, Contact, WorkingAtCompany
 
 
