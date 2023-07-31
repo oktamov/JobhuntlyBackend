@@ -19,7 +19,7 @@ from employee.serializers import (
     UniversityDetailSerializers
 )
 
-from .models import Employee, Experience, Skill, EmployeeSkill, Education
+from .models import Employee, Experience, Skill, EmployeeSkill, Education, University
 
 
 class EmployeeListView(ListCreateAPIView):
@@ -71,12 +71,6 @@ class ExperienceListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
-# class EmployeeExperienceSkillListCreateView(generics.ListCreateAPIView):
-#     queryset = Employee.objects.all()
-#     serializer_class = EmployeeExperienceSkillSerializer
-#     permission_classes = [IsAuthenticatedOrReadOnly]
-
-
 class SkillDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer
@@ -123,3 +117,33 @@ class EducationListView(ListCreateAPIView):
         if self.request.method == "POST":
             return EducationListCreateSerializer
         return EducationListCreateSerializer
+
+
+class UniversityDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = University.objects.all()
+    serializer_class = UniversityDetailSerializers
+    permission_classes = [IsOwnerOrReadOnly]
+
+
+class UniversityListCreateView(generics.ListCreateAPIView):
+    queryset = University.objects.order_by("-id")
+    filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
+    search_fields = ("name", "logo")
+    pagination_class = CustomPageNumberPagination
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    serializer_class = UniversitySerializers
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return UniversityDetailSerializers
+        return UniversityDetailSerializers
+
+
+class UniversityListView(ListCreateAPIView):
+    queryset = University.objects.all()
+    pagination_class = CustomPageNumberPagination
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return UniversityCreateSerializers
+        return UniversityCreateSerializers
