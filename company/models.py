@@ -57,10 +57,18 @@ class Company(models.Model):
     size = models.CharField(max_length=32)
     revenue = models.CharField(max_length=32)
     founded = models.DateField()
-    logo = models.ImageField(upload_to='companies/logo/')
-    sector = models.ForeignKey(to=Sector, on_delete=models.CASCADE, related_name='companies')
+    logo = models.ImageField(upload_to='companies/logo/', null=True)
+    sector = models.ForeignKey(to=Sector, on_delete=models.CASCADE, related_name='companies', null=True)
     benefits = models.ManyToManyField(to=Benefit, related_name='companies')
     tech_stacks = models.ManyToManyField(to=TechStack, related_name='companies')
+    job_count = models.IntegerField(blank=True, null=True)
+
+    def save(
+            self, force_insert=False, force_update=False, using=None, update_fields=None
+    ):
+        if self.name:
+            self.job_count = self.vacancies.count()
+        return super().save()
 
     def __str__(self):
         return self.name

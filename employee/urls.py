@@ -12,7 +12,10 @@ from employee.views import (
     ExperienceDetailView,
     EducationDetailView,
     EducationListCreateView,
-    EducationListView
+    EducationListView,
+    UniversityListCreateView,
+    UniversityListView,
+    UniversityDetailView
 )
 
 app_name = "employee"
@@ -31,8 +34,13 @@ urlpatterns = [
 
     path('experiences/', ExperienceListCreateView.as_view(), name='experience-list-create'),
     path('experiences/<int:pk>/', ExperienceDetailView.as_view(), name='experience-detail'),
+
     path('education/<int:pk>/', EducationDetailView.as_view(), name="education-detail"),
-    path('education-list-cretae/', EducationListCreateView.as_view(), name="education-list-create"),
-    path('education-list/', EducationListView.as_view(), name="education-list")
+    path('education-list-create/', EducationListCreateView.as_view(), name="education-list-create"),
+    path('education-list/', EducationListView.as_view(), name="education-list"),
+
+    path('university/<int:pk>/', UniversityDetailView.as_view(), name="university-detail"),
+    path('university-list-create/', UniversityListCreateView.as_view(), name="university-list-create"),
+    path('university-list/', UniversityListView.as_view(), name="university-list")
 
 ]
