@@ -1,10 +1,13 @@
 from django.db import models
 
+from users.models import User
+
 
 class Benefit(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField()
     logo = models.ImageField('companies/logo/')
+    user = models.ForeignKey(to='users.User', on_delete=models.CASCADE, related_name='benefits', null=True)
 
     def __str__(self):
         return self.name
@@ -12,14 +15,16 @@ class Benefit(models.Model):
 
 class Sector(models.Model):
     name = models.CharField(max_length=256)
+    user = models.ForeignKey(to='users.User', on_delete=models.CASCADE, related_name='sectors', null=True)
 
     def __str__(self):
         return self.name
 
 
 class TechStack(models.Model):
-    logo = models.ImageField('companies/contact/logo/')
+    logo = models.ImageField('companies/contact/logo/', null=True, blank=True)
     name = models.CharField(max_length=32)
+    user = models.ForeignKey(to='users.User', on_delete=models.CASCADE, related_name='tech_stacks', null=True)
 
     def __str__(self):
         return self.name
@@ -32,6 +37,7 @@ class Contact(models.Model):
         linkedin = 'linkedin', 'LinkedIn'
         mailbox = 'mailbox', 'Mailbox'
 
+    user = models.ForeignKey(to='users.User', on_delete=models.CASCADE, related_name='contacts', null=True)
     company = models.ForeignKey('Company', models.CASCADE, related_name='contacts')
     url = models.URLField()
     contact = models.CharField(max_length=10, choices=ContactChoices.choices)
@@ -42,7 +48,8 @@ class Contact(models.Model):
 
 class WorkingAtCompany(models.Model):
     company = models.ForeignKey('Company', models.CASCADE, 'images')
-    image = models.ImageField(upload_to='companies/WorkingImages/')
+    image = models.ImageField(upload_to='companies/WorkingImages/', null=True, blank=True)
+    user = models.ForeignKey(to='users.User', on_delete=models.CASCADE, related_name='working_company', null=True)
 
     def __str__(self):
         return self.company.name + ' ' + self.image.name
@@ -57,8 +64,14 @@ class Company(models.Model):
     size = models.CharField(max_length=32)
     revenue = models.CharField(max_length=32)
     founded = models.DateField()
-    logo = models.ImageField(upload_to='companies/logo/', null=True)
+    logo = models.ImageField(upload_to='companies/logo/', null=True, blank=True)
     sector = models.ForeignKey(to=Sector, on_delete=models.CASCADE, related_name='companies', null=True)
+
+    benefits = models.ManyToManyField(to=Benefit, related_name='companies', null=True, blank=True)
+    tech_stacks = models.ManyToManyField(to=TechStack, related_name='companies', null=True, blank=True)
+    job_count = models.IntegerField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
     benefits = models.ManyToManyField(to=Benefit, related_name='companies')
     tech_stacks = models.ManyToManyField(to=TechStack, related_name='companies')
 
