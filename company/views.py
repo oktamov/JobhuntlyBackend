@@ -45,7 +45,7 @@ class CompanySectorLisCreateView(generics.ListCreateAPIView):
     queryset = Sector.objects.order_by('-id')
 
     def get_serializer_class(self):
-        if self.request.metjod == 'POST':
+        if self.request.method == 'POST':
             return CompanySectorSerializer
         return CompanySectorSerializer
 

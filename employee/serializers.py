@@ -74,7 +74,7 @@ class UniversitySerializers(serializers.ModelSerializer):
 
 
 class UniversityCreateSerializers(serializers.ModelSerializer):
-    class Mate:
+    class Meta:
         model = University
         fields = ("name", "logo")
 

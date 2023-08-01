@@ -16,7 +16,7 @@ class VacancyListView(generics.ListAPIView):
     queryset = Vacancy.objects.all()
     serializer_class = VacancyListSerializer
     filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
-    ordering_fields = ("salary", 'updated_year')
+    ordering_fields = ("salary", 'created_at')
     search_fields = ("title", "job_type", "experience", "level")
     filterset_class = VacancyFilters
     pagination_class = CustomPageNumberPagination

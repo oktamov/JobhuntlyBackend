@@ -41,12 +41,12 @@ class CompanyBenefitsSerializer(serializers.ModelSerializer):
 class CompanyDetailSerializer(serializers.ModelSerializer):
     benefits = CompanyBenefitsSerializer(many=True)
     sector = CompanySectorSerializer()
-    tech_stack = CompanyTechStackSerializer(many=True)
-    contact = CompanyContactSerializer(many=True)
-    working_company = WorkingAtCompanySerializer(many=True)
+    tech_stacks = CompanyTechStackSerializer(many=True)
+    contacts = CompanyContactSerializer(many=True)
+    images = WorkingAtCompanySerializer(many=True)
 
     class Meta:
         model = Company
         fields = (
-            'id', 'name', 'description', 'logo', 'founded', 'benefits', 'sector', 'tech_stack', 'contact',
-            'working_company')
+            'id', 'name', 'description', 'logo', 'founded', 'benefits', 'sector', 'tech_stacks', 'contacts',
+            'images')
