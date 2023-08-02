@@ -73,12 +73,6 @@ class UniversitySerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class UniversityCreateSerializers(serializers.ModelSerializer):
-    class Mate:
-        model = University
-        fields = ("name", "logo")
-
-
 class UniversityDetailSerializers(serializers.ModelSerializer):
     class Meta:
         model = University

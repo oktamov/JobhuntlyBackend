@@ -14,7 +14,6 @@ from employee.views import (
     EducationListCreateView,
     EducationListView,
     UniversityListCreateView,
-    UniversityListView,
     UniversityDetailView
 )
 
@@ -41,6 +40,5 @@ urlpatterns = [
 
     path('university/<int:pk>/', UniversityDetailView.as_view(), name="university-detail"),
     path('university-list-create/', UniversityListCreateView.as_view(), name="university-list-create"),
-    path('university-list/', UniversityListView.as_view(), name="university-list")
 
 ]
