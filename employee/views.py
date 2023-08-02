@@ -15,7 +15,6 @@ from employee.serializers import (
     EducationDetailSerializer,
     EducationListCreateSerializer,
     UniversitySerializers,
-    UniversityCreateSerializers,
     UniversityDetailSerializers
 )
 
@@ -137,13 +136,3 @@ class UniversityListCreateView(generics.ListCreateAPIView):
         if self.request.method == "POST":
             return UniversityDetailSerializers
         return UniversityDetailSerializers
-
-
-class UniversityListView(ListCreateAPIView):
-    queryset = University.objects.all()
-    pagination_class = CustomPageNumberPagination
-
-    def get_serializer_class(self):
-        if self.request.method == "POST":
-            return UniversityCreateSerializers
-        return UniversityCreateSerializers

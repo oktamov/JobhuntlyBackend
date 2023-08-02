@@ -72,11 +72,13 @@ class UniversitySerializers(serializers.ModelSerializer):
         model = University
         fields = '__all__'
 
-
+        
+        
 class UniversityCreateSerializers(serializers.ModelSerializer):
     class Meta:
         model = University
         fields = ("name", "logo")
+
 
 
 class UniversityDetailSerializers(serializers.ModelSerializer):
