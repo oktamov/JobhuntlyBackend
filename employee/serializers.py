@@ -52,16 +52,10 @@ class EducationSerializer(serializers.ModelSerializer):
         model = Education
         fields = ("id", "student_to", "student_from", "gpa")
 
-
+        
 class UniversitySerializers(serializers.ModelSerializer):
     class Meta:
         model = University
         fields = '__all__'
-
         
-        
-
-
-
-
-
+       

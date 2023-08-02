@@ -13,6 +13,7 @@ from employee.serializers import (
     EducationSerializer,
     EducationDetailSerializer,
     EducationListCreateSerializer, UniversitySerializers,
+    EducationListCreateSerializer,
 )
 from paginations import CustomPageNumberPagination
 from .models import Employee, Experience, EmployeeSkill, Education, University
@@ -122,3 +123,4 @@ class UniversityListCreateView(generics.ListCreateAPIView):
         if self.request.method == "POST":
             return UniversityDetailSerializers
         return UniversityDetailSerializers
+
