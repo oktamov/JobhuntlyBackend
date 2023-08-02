@@ -3,8 +3,8 @@ from rest_framework import generics
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
-from .permissions import IsOwnerOrReadOnly
-from paginations import CustomPageNumberPagination
+
+from common.serializers import UniversityDetailSerializers
 from employee.serializers import (
     ExperienceSerializer,
     EmployeeSkillSerializer,
@@ -12,10 +12,12 @@ from employee.serializers import (
     EmployeeDetailSerializer,
     EducationSerializer,
     EducationDetailSerializer,
+    EducationListCreateSerializer, UniversitySerializers,
     EducationListCreateSerializer,
 )
-
-from .models import Employee, Experience, EmployeeSkill, Education
+from paginations import CustomPageNumberPagination
+from .models import Employee, Experience, EmployeeSkill, Education, University
+from .permissions import IsOwnerOrReadOnly
 
 
 class EmployeeListView(ListCreateAPIView):
@@ -101,3 +103,24 @@ class EducationListView(ListCreateAPIView):
         if self.request.method == "POST":
             return EducationListCreateSerializer
         return EducationListCreateSerializer
+
+
+class UniversityDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = University.objects.all()
+    serializer_class = UniversityDetailSerializers
+    permission_classes = [IsOwnerOrReadOnly]
+
+
+class UniversityListCreateView(generics.ListCreateAPIView):
+    queryset = University.objects.order_by("-id")
+    filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
+    search_fields = ("name", "logo")
+    pagination_class = CustomPageNumberPagination
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    serializer_class = UniversitySerializers
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return UniversityDetailSerializers
+        return UniversityDetailSerializers
+
