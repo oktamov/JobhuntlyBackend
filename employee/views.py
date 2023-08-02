@@ -13,8 +13,6 @@ from employee.serializers import (
     EducationSerializer,
     EducationDetailSerializer,
     EducationListCreateSerializer,
-    UniversitySerializers,
-    UniversityDetailSerializers
 )
 
 from .models import Employee, Experience, EmployeeSkill, Education
@@ -103,24 +101,3 @@ class EducationListView(ListCreateAPIView):
         if self.request.method == "POST":
             return EducationListCreateSerializer
         return EducationListCreateSerializer
-
-
-
-class UniversityDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = University.objects.all()
-    serializer_class = UniversityDetailSerializers
-    permission_classes = [IsOwnerOrReadOnly]
-
-
-class UniversityListCreateView(generics.ListCreateAPIView):
-    queryset = University.objects.order_by("-id")
-    filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
-    search_fields = ("name", "logo")
-    pagination_class = CustomPageNumberPagination
-    permission_classes = [IsAuthenticatedOrReadOnly]
-    serializer_class = UniversitySerializers
-
-    def get_serializer_class(self):
-        if self.request.method == "POST":
-            return UniversityDetailSerializers
-        return UniversityDetailSerializers
