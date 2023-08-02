@@ -1,7 +1,9 @@
 from django.db import models
 
+from common.models import Skill
 from company.models import Company
 from users.models import User
+from common.models import University
 
 
 class Employee(models.Model):
@@ -43,20 +45,8 @@ class Education(models.Model):
     student_to = models.DateField()
     student_from = models.DateField()
     gpa = models.IntegerField(default=0)
-    employee_id = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='education')
-    university_id = models.ForeignKey('University', on_delete=models.CASCADE, related_name='university')
-
-
-class University(models.Model):
-    name = models.CharField(max_length=200)
-    logo = models.ImageField(upload_to='universities/logo')
-
-    def __str__(self):
-        return self.name
-
-
-class Skill(models.Model):
-    name = models.CharField(max_length=255)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='education')
+    university = models.ForeignKey('common.University', on_delete=models.CASCADE, related_name='education')
 
 
 class EmployeeSkill(models.Model):
