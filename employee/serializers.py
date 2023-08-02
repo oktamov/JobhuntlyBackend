@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from common.serializers import SkillSerializer
-from .models import Employee, Experience, EmployeeSkill, Education
+from .models import Employee, Experience, EmployeeSkill, Education, University
 
 
 class EmployeeListCreateSerializer(serializers.ModelSerializer):
@@ -60,15 +60,8 @@ class UniversitySerializers(serializers.ModelSerializer):
 
         
         
-class UniversityCreateSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = University
-        fields = ("name", "logo")
 
 
 
-class UniversityDetailSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = University
-        fields = ("id", "name", "logo")
-        read_only_fields = ("id",)
+
+
