@@ -7,7 +7,6 @@ from .permissions import IsOwnerOrReadOnly
 from paginations import CustomPageNumberPagination
 from employee.serializers import (
     ExperienceSerializer,
-    SkillSerializer,
     EmployeeSkillSerializer,
     EmployeeListCreateSerializer,
     EmployeeDetailSerializer,
@@ -15,11 +14,10 @@ from employee.serializers import (
     EducationDetailSerializer,
     EducationListCreateSerializer,
     UniversitySerializers,
-    UniversityCreateSerializers,
     UniversityDetailSerializers
 )
 
-from .models import Employee, Experience, Skill, EmployeeSkill, Education, University
+from .models import Employee, Experience, EmployeeSkill, Education
 
 
 class EmployeeListView(ListCreateAPIView):
@@ -53,12 +51,6 @@ class EmployeeListCreateView(generics.ListCreateAPIView):
         return EmployeeDetailSerializer
 
 
-class SkillListCreateView(generics.ListCreateAPIView):
-    queryset = Skill.objects.all()
-    serializer_class = SkillSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-
 class EmployeeSkillListCreateView(generics.ListCreateAPIView):
     queryset = EmployeeSkill.objects.all()
     serializer_class = EmployeeSkillSerializer
@@ -68,12 +60,6 @@ class EmployeeSkillListCreateView(generics.ListCreateAPIView):
 class ExperienceListCreateView(generics.ListCreateAPIView):
     queryset = Experience.objects.all()
     serializer_class = ExperienceSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-
-class SkillDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Skill.objects.all()
-    serializer_class = SkillSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
@@ -119,6 +105,7 @@ class EducationListView(ListCreateAPIView):
         return EducationListCreateSerializer
 
 
+
 class UniversityDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = University.objects.all()
     serializer_class = UniversityDetailSerializers
@@ -137,13 +124,3 @@ class UniversityListCreateView(generics.ListCreateAPIView):
         if self.request.method == "POST":
             return UniversityDetailSerializers
         return UniversityDetailSerializers
-
-
-class UniversityListView(ListCreateAPIView):
-    queryset = University.objects.all()
-    pagination_class = CustomPageNumberPagination
-
-    def get_serializer_class(self):
-        if self.request.method == "POST":
-            return UniversityCreateSerializers
-        return UniversityCreateSerializers

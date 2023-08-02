@@ -37,7 +37,7 @@ urlpatterns = [
     path('vacancy/', include('vacancy.urls')),
     path('employee/', include('employee.urls')),
     path('company/', include('company.urls')),
-
+    path('', include('common.urls')),
 ]
 
 swagger_urls = [
