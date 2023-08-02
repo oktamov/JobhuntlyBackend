@@ -1,12 +1,13 @@
 from rest_framework import serializers
-
 from company.models import Company, Benefit, Sector, TechStack, Contact, WorkingAtCompany
 
 
 class CompanyListCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
-        fields = ('id', 'name', 'description', 'logo', 'sector')
+        fields = (
+            'id', 'user', 'name', 'region', 'location', 'description', 'size', 'revenue', 'founded', 'logo', 'sector',
+            'benefits', 'tech_stacks', 'job_count', 'created_at')
 
 
 class CompanySectorSerializer(serializers.ModelSerializer):
@@ -28,6 +29,8 @@ class CompanyContactSerializer(serializers.ModelSerializer):
 
 
 class WorkingAtCompanySerializer(serializers.ModelSerializer):
+    image = serializers.ImageField
+
     class Meta:
         model = WorkingAtCompany
         fields = ('id', 'company', 'image')
@@ -42,12 +45,12 @@ class CompanyBenefitsSerializer(serializers.ModelSerializer):
 class CompanyDetailSerializer(serializers.ModelSerializer):
     benefits = CompanyBenefitsSerializer(many=True)
     sector = CompanySectorSerializer()
-    tech_stack = CompanyTechStackSerializer(many=True)
-    contact = CompanyContactSerializer(many=True)
-    working_company = WorkingAtCompanySerializer(many=True)
+    tech_stacks = CompanyTechStackSerializer(many=True)
+    contacts = CompanyContactSerializer(many=True)
+    images = WorkingAtCompanySerializer(many=True)
 
     class Meta:
         model = Company
         fields = (
-            'id', 'name', 'description', 'logo', 'founded', 'benefits', 'sector', 'tech_stack', 'contact',
-            'working_company')
+            'id', 'name', 'description', 'logo', 'founded', 'benefits', 'sector', 'tech_stacks', 'contacts',
+            'images')

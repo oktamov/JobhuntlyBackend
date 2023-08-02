@@ -9,14 +9,14 @@ from vacancy.custom_permission import IsOwnerOrReadOnly
 from vacancy.filters import VacancyFilters
 from vacancy.models import Vacancy, Application
 from vacancy.serializers import VacancySerializer, ApplicationSerializer, ApplicationListSerializer, \
-    VacancyListSerializer
+    VacancyListSerializer, VacancyPutSerializer
 
 
 class VacancyListView(generics.ListAPIView):
     queryset = Vacancy.objects.all()
     serializer_class = VacancyListSerializer
     filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
-    ordering_fields = ("salary", 'updated_year')
+    ordering_fields = ("salary", 'created_at')
     search_fields = ("title", "job_type", "experience", "level")
     filterset_class = VacancyFilters
     pagination_class = CustomPageNumberPagination
@@ -24,9 +24,13 @@ class VacancyListView(generics.ListAPIView):
 
 class VacancyDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Vacancy.objects.all()
-    serializer_class = VacancyListSerializer
     lookup_field = "pk"
     permission_classes = [IsOwnerOrReadOnly]
+
+    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return VacancyListSerializer
+        return VacancyPutSerializer
 
 
 class VacancyCreateView(generics.CreateAPIView):

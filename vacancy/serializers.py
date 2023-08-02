@@ -6,6 +6,7 @@ from vacancy.models import Vacancy, Application
 
 
 class VacancySerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
     class Meta:
         model = Vacancy
         fields = (
@@ -23,6 +24,14 @@ class VacancySerializer(serializers.ModelSerializer):
 
         validated_data['user'] = user
         return super().create(validated_data)
+
+
+class VacancyPutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Vacancy
+        fields = (
+            'id', 'title', 'experience', 'level', 'job_type', 'salary', 'overview', 'description', 'offer',
+            'user', 'company', 'skills')
 
 
 class SkillForVacancySerializer(serializers.ModelSerializer):
