@@ -7,7 +7,6 @@ from .permissions import IsOwnerOrReadOnly
 from paginations import CustomPageNumberPagination
 from employee.serializers import (
     ExperienceSerializer,
-    SkillSerializer,
     EmployeeSkillSerializer,
     EmployeeListCreateSerializer,
     EmployeeDetailSerializer,
@@ -18,7 +17,7 @@ from employee.serializers import (
     UniversityDetailSerializers
 )
 
-from .models import Employee, Experience, Skill, EmployeeSkill, Education, University
+from .models import Employee, Experience, EmployeeSkill, Education
 
 
 class EmployeeListView(ListCreateAPIView):
@@ -52,12 +51,6 @@ class EmployeeListCreateView(generics.ListCreateAPIView):
         return EmployeeDetailSerializer
 
 
-class SkillListCreateView(generics.ListCreateAPIView):
-    queryset = Skill.objects.all()
-    serializer_class = SkillSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-
 class EmployeeSkillListCreateView(generics.ListCreateAPIView):
     queryset = EmployeeSkill.objects.all()
     serializer_class = EmployeeSkillSerializer
@@ -67,12 +60,6 @@ class EmployeeSkillListCreateView(generics.ListCreateAPIView):
 class ExperienceListCreateView(generics.ListCreateAPIView):
     queryset = Experience.objects.all()
     serializer_class = ExperienceSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-
-class SkillDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Skill.objects.all()
-    serializer_class = SkillSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
@@ -116,6 +103,7 @@ class EducationListView(ListCreateAPIView):
         if self.request.method == "POST":
             return EducationListCreateSerializer
         return EducationListCreateSerializer
+
 
 
 class UniversityDetailView(generics.RetrieveUpdateDestroyAPIView):
