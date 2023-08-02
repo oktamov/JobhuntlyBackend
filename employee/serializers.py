@@ -51,24 +51,3 @@ class EducationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Education
         fields = ("id", "student_to", "student_from", "gpa")
-
-
-class UniversitySerializers(serializers.ModelSerializer):
-    class Meta:
-        model = University
-        fields = '__all__'
-
-        
-        
-class UniversityCreateSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = University
-        fields = ("name", "logo")
-
-
-
-class UniversityDetailSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = University
-        fields = ("id", "name", "logo")
-        read_only_fields = ("id",)
