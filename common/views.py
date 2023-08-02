@@ -3,7 +3,6 @@ from rest_framework import generics
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from employee.permissions import IsOwnerOrReadOnly
 from common.models import University, Skill
 from common.serializers import(
     UniversityDetailSerializers,
@@ -17,7 +16,7 @@ from paginations import CustomPageNumberPagination
 class UniversityDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = University.objects.all()
     serializer_class = UniversityDetailSerializers
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class UniversityListCreateView(generics.ListCreateAPIView):
