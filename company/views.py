@@ -23,6 +23,9 @@ class CompanyListCreateView(generics.ListCreateAPIView):
             return CompanyListCreateSerializer
         return CompanyListCreateSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 class WorkingCompanyCreateView(generics.CreateAPIView):
     queryset = WorkingAtCompany.objects.order_by('-id')
@@ -31,6 +34,9 @@ class WorkingCompanyCreateView(generics.CreateAPIView):
         if self.request.method == 'POST':
             return WorkingAtCompanySerializer
         return WorkingAtCompanySerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 class WorkingCompanyDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -48,6 +54,9 @@ class CompanyContactCreateView(generics.CreateAPIView):
             return CompanyContactSerializer
         return CompanyContactSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 class CompanyContactDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Contact.objects.order_by('-id')
@@ -64,6 +73,9 @@ class CompanySectorCreateView(generics.CreateAPIView):
             return CompanySectorSerializer
         return CompanySectorSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 class CompanySectorDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Sector.objects.order_by('-id')
@@ -79,6 +91,9 @@ class CompanyTechStackCreateView(generics.CreateAPIView):
         if self.request.method == 'POST':
             return CompanyTechStackSerializer
         return CompanyTechStackSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 class CompanyTechStackDetailView(generics.RetrieveUpdateDestroyAPIView):
