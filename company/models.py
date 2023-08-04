@@ -66,14 +66,10 @@ class Company(models.Model):
     founded = models.DateField()
     logo = models.ImageField(upload_to='companies/logo/', null=True, blank=True)
     sector = models.ForeignKey(to=Sector, on_delete=models.CASCADE, related_name='companies', null=True)
-
     benefits = models.ManyToManyField(to=Benefit, related_name='companies', null=True, blank=True)
     tech_stacks = models.ManyToManyField(to=TechStack, related_name='companies', null=True, blank=True)
     job_count = models.IntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
-    benefits = models.ManyToManyField(to=Benefit, related_name='companies')
-    tech_stacks = models.ManyToManyField(to=TechStack, related_name='companies')
 
     @property
     def jobs_count(self):

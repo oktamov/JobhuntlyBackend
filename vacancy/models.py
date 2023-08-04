@@ -1,8 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from common.models import Skill
 from company.models import Company
-from employee.models import Employee, Skill
+from employee.models import Employee
 
 User = get_user_model()
 
