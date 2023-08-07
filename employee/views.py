@@ -3,23 +3,21 @@ from rest_framework import generics
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
-from .permissions import IsOwnerOrReadOnly
-from paginations import CustomPageNumberPagination
+
+from common.serializers import UniversityDetailSerializers
 from employee.serializers import (
     ExperienceSerializer,
-    SkillSerializer,
     EmployeeSkillSerializer,
     EmployeeListCreateSerializer,
     EmployeeDetailSerializer,
     EducationSerializer,
     EducationDetailSerializer,
+    EducationListCreateSerializer, UniversitySerializers,
     EducationListCreateSerializer,
-    UniversitySerializers,
-    UniversityCreateSerializers,
-    UniversityDetailSerializers
 )
-
-from .models import Employee, Experience, Skill, EmployeeSkill, Education, University
+from paginations import CustomPageNumberPagination
+from .models import Employee, Experience, EmployeeSkill, Education, University
+from .permissions import IsOwnerOrReadOnly
 
 
 class EmployeeListView(ListCreateAPIView):
@@ -53,12 +51,6 @@ class EmployeeListCreateView(generics.ListCreateAPIView):
         return EmployeeDetailSerializer
 
 
-class SkillListCreateView(generics.ListCreateAPIView):
-    queryset = Skill.objects.all()
-    serializer_class = SkillSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-
 class EmployeeSkillListCreateView(generics.ListCreateAPIView):
     queryset = EmployeeSkill.objects.all()
     serializer_class = EmployeeSkillSerializer
@@ -68,12 +60,6 @@ class EmployeeSkillListCreateView(generics.ListCreateAPIView):
 class ExperienceListCreateView(generics.ListCreateAPIView):
     queryset = Experience.objects.all()
     serializer_class = ExperienceSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-
-class SkillDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Skill.objects.all()
-    serializer_class = SkillSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
@@ -138,12 +124,3 @@ class UniversityListCreateView(generics.ListCreateAPIView):
             return UniversityDetailSerializers
         return UniversityDetailSerializers
 
-
-class UniversityListView(ListCreateAPIView):
-    queryset = University.objects.all()
-    pagination_class = CustomPageNumberPagination
-
-    def get_serializer_class(self):
-        if self.request.method == "POST":
-            return UniversityCreateSerializers
-        return UniversityCreateSerializers

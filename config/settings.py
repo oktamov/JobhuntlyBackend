@@ -48,14 +48,15 @@ INSTALLED_APPS = [
     'drf_yasg',
     # 'dj_rest_auth',
     # 'rest_framework.authtoken',
-    # 'rest_framework_simplejwt',
+    'rest_framework_simplejwt',
 
     # My App
 
     'users.apps.UsersConfig',
     'company.apps.CompanyConfig',
     'vacancy.apps.VacancyConfig',
-    'employee.apps.EmployeeConfig'
+    'employee.apps.EmployeeConfig',
+    'common.apps.CommonConfig'
 ]
 
 MIDDLEWARE = [
@@ -141,3 +142,13 @@ MEDIA_URL = 'media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
+
+REST_FRAMEWORK = {
+    "DEFAULT_RENDERER_CLASSES": [
+        "services.renderers.CustomRenderer",
+    ]
+}
+
+SWAGGER_SETTINGS = {
+    "DEEP_LINKING": True,
+}

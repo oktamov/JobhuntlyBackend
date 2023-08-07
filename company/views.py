@@ -6,13 +6,14 @@ from company.serialziers import CompanyDetailSerializer, WorkingAtCompanySeriali
     CompanyContactSerializer, CompanySectorSerializer, CompanyTechStackSerializer, CompanyListCreateSerializer
 from company.models import Company, WorkingAtCompany, Contact, Sector, TechStack
 from paginations import CustomPageNumberPagination
+from vacancy.custom_permission import IsOwnerOrReadOnly
 
 
 class CompanyListCreateView(generics.ListCreateAPIView):
     queryset = Company.objects.order_by('-id')
     filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
-    # filterset_fields = ("region", "birth_date")
-    ordering_fields = ("name", "size")
+    filterset_fields = ('sector__name', 'size')
+    ordering_fields = ('id', 'created_at')
     search_fields = ("name", "location")
     pagination_class = CustomPageNumberPagination
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -22,8 +23,11 @@ class CompanyListCreateView(generics.ListCreateAPIView):
             return CompanyListCreateSerializer
         return CompanyListCreateSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
-class WorkingCompanyListCreateView(generics.ListCreateAPIView):
+
+class WorkingCompanyCreateView(generics.CreateAPIView):
     queryset = WorkingAtCompany.objects.order_by('-id')
 
     def get_serializer_class(self):
@@ -31,8 +35,18 @@ class WorkingCompanyListCreateView(generics.ListCreateAPIView):
             return WorkingAtCompanySerializer
         return WorkingAtCompanySerializer
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
-class CompanyContactListCreateView(generics.ListCreateAPIView):
+
+class WorkingCompanyDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = WorkingAtCompany.objects.order_by('-id')
+    lookup_field = "pk"
+    permission_classes = [IsOwnerOrReadOnly]
+    serializer_class = WorkingAtCompanySerializer
+
+
+class CompanyContactCreateView(generics.CreateAPIView):
     queryset = Contact.objects.order_by('-id')
 
     def get_serializer_class(self):
@@ -40,8 +54,18 @@ class CompanyContactListCreateView(generics.ListCreateAPIView):
             return CompanyContactSerializer
         return CompanyContactSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
-class CompanySectorLisCreateView(generics.ListCreateAPIView):
+
+class CompanyContactDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Contact.objects.order_by('-id')
+    lookup_field = "pk"
+    permission_classes = [IsOwnerOrReadOnly]
+    serializer_class = CompanyContactSerializer
+
+
+class CompanySectorCreateView(generics.CreateAPIView):
     queryset = Sector.objects.order_by('-id')
 
     def get_serializer_class(self):
@@ -49,8 +73,18 @@ class CompanySectorLisCreateView(generics.ListCreateAPIView):
             return CompanySectorSerializer
         return CompanySectorSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
-class CompanyTechStackListCreateView(generics.ListCreateAPIView):
+
+class CompanySectorDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Sector.objects.order_by('-id')
+    lookup_field = "pk"
+    permission_classes = [IsOwnerOrReadOnly]
+    serializer_class = CompanySectorSerializer
+
+
+class CompanyTechStackCreateView(generics.CreateAPIView):
     queryset = TechStack.objects.order_by('-id')
 
     def get_serializer_class(self):
@@ -58,12 +92,19 @@ class CompanyTechStackListCreateView(generics.ListCreateAPIView):
             return CompanyTechStackSerializer
         return CompanyTechStackSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
-class CompanyDetailView(generics.RetrieveAPIView):
+
+class CompanyTechStackDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = TechStack.objects.order_by('-id')
+    lookup_field = "pk"
+    permission_classes = [IsOwnerOrReadOnly]
+    serializer_class = CompanyTechStackSerializer
+
+
+class CompanyDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Company.objects.order_by('-id')
     lookup_field = "pk"
-
-    def get_serializer_class(self):
-        if self.request.method in ["PUT", "PATCH"]:
-            return CompanyDetailSerializer
-        return CompanyDetailSerializer
+    permission_classes = [IsOwnerOrReadOnly]
+    serializer_class = CompanyDetailSerializer
